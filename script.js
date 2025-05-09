@@ -10,60 +10,58 @@ const productList = document.getElementById("product-list");
 const cartList = document.getElementById("cart-list");
 const clearCartBtn = document.getElementById("clear-cart-btn");
 
-// Utility: Save cart to sessionStorage
-function saveCartToSession(cart) {
-  sessionStorage.setItem("cart", JSON.stringify(cart));
-}
-
-// Utility: Get cart from sessionStorage
-function getCartFromSession() {
-  const cart = sessionStorage.getItem("cart");
-  return cart ? JSON.parse(cart) : [];
-}
-
-// Render the product list with Add to Cart buttons
+// Render products
 function renderProducts() {
   productList.innerHTML = "";
-  products.forEach(product => {
+  products.forEach((product) => {
     const li = document.createElement("li");
     li.textContent = `${product.name} - $${product.price}`;
 
     const addButton = document.createElement("button");
     addButton.textContent = "Add to Cart";
-    addButton.onclick = () => addToCart(product);
+    addButton.addEventListener("click", () => addToCart(product));
 
     li.appendChild(addButton);
     productList.appendChild(li);
   });
 }
 
-// Render the cart items
+// Retrieve cart from sessionStorage
+function getCartFromSession() {
+  const cart = sessionStorage.getItem("cart");
+  return cart ? JSON.parse(cart) : [];
+}
+
+// Save cart to sessionStorage
+function saveCartToSession(cart) {
+  sessionStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// Render cart items
 function renderCart() {
   const cart = getCartFromSession();
   cartList.innerHTML = "";
-  cart.forEach(item => {
+  cart.forEach((item) => {
     const li = document.createElement("li");
     li.textContent = `${item.name} - $${item.price}`;
     cartList.appendChild(li);
   });
 }
 
-// Add item to cart and update sessionStorage
+// Add item to cart
 function addToCart(product) {
   const cart = getCartFromSession();
-  cart.push(product);
+  cart.push(product); // Allow duplicates
   saveCartToSession(cart);
   renderCart();
 }
 
-// Clear the cart and update sessionStorage
+// Clear cart
 clearCartBtn.addEventListener("click", () => {
   sessionStorage.removeItem("cart");
   renderCart();
 });
 
-// Initialize on page load
-window.onload = () => {
-  renderProducts();
-  renderCart(); // Load cart from sessionStorage on reload
-};
+// Initial render
+renderProducts();
+renderCart();
