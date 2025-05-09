@@ -12,12 +12,12 @@ const clearCartBtn = document.getElementById("clear-cart-btn");
 
 // Utility: Save cart to sessionStorage
 function saveCartToSession(cart) {
-  sessionStorage.setItem("shoppingCart", JSON.stringify(cart));
+  sessionStorage.setItem("cart", JSON.stringify(cart));
 }
 
 // Utility: Get cart from sessionStorage
 function getCartFromSession() {
-  const cart = sessionStorage.getItem("shoppingCart");
+  const cart = sessionStorage.getItem("cart");
   return cart ? JSON.parse(cart) : [];
 }
 
@@ -58,7 +58,7 @@ function addToCart(product) {
 
 // Clear the cart and update sessionStorage
 clearCartBtn.addEventListener("click", () => {
-  sessionStorage.removeItem("shoppingCart");
+  sessionStorage.removeItem("cart");
   renderCart();
 });
 
