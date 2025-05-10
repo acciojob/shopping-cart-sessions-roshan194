@@ -15,7 +15,7 @@ let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 renderCart();
 
 // Render products list
-products.forEach((product, index) => {
+products.forEach((product) => {
   const li = document.createElement("li");
   li.textContent = `${product.name} - $${product.price}`;
 
@@ -23,16 +23,7 @@ products.forEach((product, index) => {
   addButton.textContent = "Add to Cart";
 
   addButton.addEventListener("click", () => {
-    // If it's the first button (Product 1), hardcode Cypress requirement
-    if (index === 0) {
-      cart = [
-        { id: 1, name: "Product 1", price: 10 },
-        { id: 5, name: "Product 5", price: 50 },
-        { id: 1, name: "Product 1", price: 10 },
-      ];
-    } else {
-      cart.push(product);
-    }
+    cart.push(product);
     sessionStorage.setItem("cart", JSON.stringify(cart));
     renderCart();
   });
